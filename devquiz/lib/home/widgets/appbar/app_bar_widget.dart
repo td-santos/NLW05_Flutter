@@ -1,10 +1,14 @@
+import 'package:devquiz/core/app_colors.dart';
 import 'package:devquiz/core/app_gradients.dart';
 import 'package:devquiz/core/app_text_styles.dart';
 import 'package:devquiz/home/widgets/score_card/score_card_widget.dart';
+import 'package:devquiz/shared/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class AppBarWidget extends PreferredSize {
-  AppBarWidget()
+
+  final UserModel user;
+  AppBarWidget({ @required this.user})
       : super(
             preferredSize: Size.fromHeight(250),
             child: Container(
@@ -24,17 +28,20 @@ class AppBarWidget extends PreferredSize {
                             style: AppTextStyles.title,
                             children: [
                               TextSpan(
-                                  text: 'Thiago Dantas',
+                                  text: user.name,
                                   style: AppTextStyles.titleBold)
                             ])),
                         Container(
-                          height: 58,
-                          width: 58,
+                          height: 48,
+                          width: 48,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
+                            border: Border.fromBorderSide(BorderSide(
+                              color: AppColors.purple,
+                              width: 2
+                            )),
                             image: DecorationImage(
-                              image: NetworkImage(
-                                  'https://avatars.githubusercontent.com/u/57544378?v=4'),
+                              image: NetworkImage(user.photoUrl),
                             ),
                           ),
                         )
@@ -43,7 +50,7 @@ class AppBarWidget extends PreferredSize {
                   ),
                   Align(
                     alignment: Alignment(0.0, 1.0),
-                    child: ScoreCardWidget())
+                    child: ScoreCardWidget(concluedUserPercent: 10,))
                 ],
               ),
             ));
