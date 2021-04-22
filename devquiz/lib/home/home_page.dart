@@ -1,3 +1,4 @@
+import 'package:devquiz/challenge/challenge_page.dart';
 import 'package:devquiz/challenge/widgets/quiz/quiz_widget.dart';
 import 'package:devquiz/core/app_colors.dart';
 import 'package:devquiz/core/app_images.dart';
@@ -62,6 +63,11 @@ class _HomePageState extends State<HomePage> {
                   completed: '${e.questionAwnsored} de ${e.questions.length}',
                   imagem: AppImages.blocks,
                   percent: e.questionAwnsored / e.questions.length,
+                  ontap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context)=> ChallengePage(questions: e.questions,)
+                    ));
+                  },
                 )).toList(),
               ),
             )
