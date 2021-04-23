@@ -7,7 +7,7 @@ import 'package:devquiz/core/app_text_styles.dart';
 class AwnserWidget extends StatelessWidget {
   final AwnserModel awnser;
   final bool isSelected;
-  final VoidCallback ontap;
+  final ValueChanged<bool> ontap;
   final bool disabled;
 
   const AwnserWidget({
@@ -33,7 +33,9 @@ class AwnserWidget extends StatelessWidget {
       child: IgnorePointer(
         ignoring: disabled,
         child: GestureDetector(
-          onTap: ontap,
+          onTap: (){
+            ontap(awnser.isRight);
+          },
           child: Container(
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(

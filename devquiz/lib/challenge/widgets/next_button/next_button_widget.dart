@@ -35,6 +35,22 @@ class NextButtonWidget extends StatelessWidget {
     this.borderColor = AppColors.border,
     this.overlayColor = AppColors.border;
 
+  NextButtonWidget.purple({@required String label, @required VoidCallback ontap})
+  : this.backgroundColor = AppColors.purple, 
+    this.fontColor = AppColors.white, 
+    this.label = label,
+    this.ontap = ontap,
+    this.borderColor = AppColors.purple,
+    this.overlayColor = Colors.purple[400];
+
+  NextButtonWidget.transparent({@required String label, @required VoidCallback ontap})
+  : this.backgroundColor = Colors.transparent, 
+    this.fontColor = AppColors.grey, 
+    this.label = label,
+    this.ontap = ontap,
+    this.borderColor = Colors.transparent,
+    this.overlayColor = Colors.transparent;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +59,7 @@ class NextButtonWidget extends StatelessWidget {
       child: TextButton(
         style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(overlayColor),
-          side: MaterialStateProperty.all(BorderSide(color: AppColors.border)),
+          side: MaterialStateProperty.all(BorderSide(color: borderColor)),
           backgroundColor: MaterialStateProperty.all(backgroundColor),
           shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))
         ),

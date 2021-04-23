@@ -2,16 +2,45 @@ import 'package:devquiz/core/app_colors.dart';
 import 'package:devquiz/core/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
-class ChartWidget extends StatelessWidget {
-  final int concluedPercent;
+class ChartWidget extends StatefulWidget {
+  final double percent;
 
-  const ChartWidget({Key key, @required this.concluedPercent}) : super(key: key);
+  const ChartWidget({Key key, @required this.percent}) : super(key: key);
+
+  @override
+  _ChartWidgetState createState() => _ChartWidgetState();
+}
+
+class _ChartWidgetState extends State<ChartWidget> 
+  with SingleTickerProviderStateMixin{
+
+  AnimationController _controller;
+  Animation<double> _animation;
+
+  void initAnimation(){
+    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
+    _animation = Tween<double>(begin: 0.0, end: widget.percent).animate(_controller);
+    _controller.forward();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // 
+    initAnimation();
+    super.initState();
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 80,
       width: 80,
-      child: Stack(
+      child: AnimatedBuilder(
+        animation: _animation,
+        builder: (context,_){
+          return Stack(
         children: [
           Center(
             child: Container(
@@ -19,14 +48,16 @@ class ChartWidget extends StatelessWidget {
               width: 80,
               child: CircularProgressIndicator(
                 strokeWidth: 10,
-                value:concluedPercent >= 100? 100 : double.parse(".$concluedPercent"),
+                value:_animation.value,
                 backgroundColor: AppColors.chartSecondary,
                 valueColor: AlwaysStoppedAnimation<Color>(AppColors.chartPrimary),
               ),
             ),
           ),
-          Center(child: Text('${concluedPercent}%',style: AppTextStyles.heading,))
+          Center(child: Text('${(_animation.value *100).toInt()}%',style: AppTextStyles.heading,))
         ],
+      );
+        },
       ),
     );
   }
